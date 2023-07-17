@@ -1,1 +1,1 @@
-pyinstaller main.py --onefile
+pyinstaller main.py --onefile --add-data="blank.mp4;."

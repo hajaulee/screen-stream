@@ -1,4 +1,5 @@
 import io
+import os
 import threading
 import time
 from flask import Flask, Response, send_file
@@ -55,7 +56,8 @@ def gen(camera):
 
 @app.route("/blank-video")
 def video():
-    with open("blank.mp4", "rb") as f:
+    filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blank.mp4')
+    with open(filepath, "rb") as f:
         f_bytes = f.read()
     return send_file(io.BytesIO(f_bytes), mimetype='video/mp4')
 
@@ -70,8 +72,8 @@ def home():
     return """
     <body style="background:black">
         <center>
-            <div style="display:none">
-                <video controls autoplay muted loop>
+            <div style="with:0;height:0">
+                <video autoplay muted loop>
                     <source src="/blank-video" type="video/mp4">
                 </video>
             </div>
