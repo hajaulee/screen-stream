@@ -1,7 +1,7 @@
 import io
 import threading
 import time
-from flask import Flask, Response
+from flask import Flask, Response, send_file
 import pyautogui
 from PIL import ImageDraw
 
@@ -52,7 +52,12 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n\r\n')
         time.sleep(1/ fps)
-    
+
+@app.route("/blank-video")
+def video():
+    with open("blank.mp4", "rb") as f:
+        f_bytes = f.read()
+    return send_file(io.BytesIO(f_bytes), mimetype='video/mp4')
 
 @app.route("/stream")
 def stream():
@@ -65,6 +70,11 @@ def home():
     return """
     <body style="background:black">
         <center>
+            <div style="display:none">
+                <video controls autoplay muted loop>
+                    <source src="/blank-video" type="video/mp4">
+                </video>
+            </div>
             <img id="img" style="max-width:99vw;max-height:80vh;" src="/stream" ondblclick="toggleFullscreen()" />
         </center>
         <script> 
@@ -98,13 +108,6 @@ def home():
                 }
                 isFullscreen = !isFullscreen;
             }
-
-            let wakeLock = null;
-            document.addEventListener("visibilitychange", async () => {
-                if (wakeLock !== null && document.visibilityState === "visible") {
-                    wakeLock = await navigator.wakeLock.request("screen");
-                }
-            });
         </script>
     </body>
     """
