@@ -26,19 +26,22 @@ class Camera:
 
     def _capture_loop(self):
         delay_time = 1/self.fps
-        poiter_size = 5
+        # pointer_size = 5
         while self.isrunning:
-            screenshot = pyautogui.screenshot()
-            if screenshot:
-                # x, y = pyautogui.position()
-                # draw = ImageDraw.Draw(screenshot)
-                # draw.ellipse(
-                #     [x - poiter_size, y- poiter_size, x + poiter_size, y + poiter_size], 
-                #     fill=(255, 0, 0), outline='white'
-                # )
-                img_bytes = io.BytesIO()
-                screenshot.save(img_bytes, format='JPEG')
-                self.last_frame = img_bytes.getvalue()
+            try:
+                screenshot = pyautogui.screenshot()
+                if screenshot:
+                    # x, y = pyautogui.position()
+                    # draw = ImageDraw.Draw(screenshot)
+                    # draw.ellipse(
+                    #     [x - pointer_size, y- pointer_size, x + pointer_size, y + pointer_size], 
+                    #     fill=(255, 0, 0), outline='white'
+                    # )
+                    img_bytes = io.BytesIO()
+                    screenshot.save(img_bytes, format='JPEG')
+                    self.last_frame = img_bytes.getvalue()
+            except Exception as exc:
+                print("Error:", exec)
             time.sleep(delay_time)
 
     def get_frame(self):
