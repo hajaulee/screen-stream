@@ -1,1 +1,1 @@
-pyinstaller main.py --onefile --add-data="blank.mp4;."
+pyinstaller main.py --name="ScreenStream" --onefile --add-data="blank.mp4;."
