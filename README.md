@@ -13,7 +13,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Then access `http:{ip}:9000` from other device(such as tablet), double click to fullscreen mode.
+Then access `http://{ip}:9000` from other device(such as tablet), double click to fullscreen mode.
 
 ## Build
 
